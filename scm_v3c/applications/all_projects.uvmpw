@@ -81,4 +81,8 @@
     <NodeIsActive>1</NodeIsActive>
   </project>
 
+  <project>
+    <PathAndName>.\sram_read\sram_read.uvprojx</PathAndName>
+  </project>
+
 </ProjectWorkspace>

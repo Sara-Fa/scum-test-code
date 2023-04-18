@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>ARMCM0</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.3.0</PackID>
+          <PackID>ARM.CMSIS.5.9.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x20000) CPUTYPE("Cortex-M0") CLOCK(10000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -184,6 +184,9 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -350,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -516,54 +519,5 @@
       </Groups>
     </Target>
   </Targets>
-
-  <RTE>
-    <apis/>
-    <components/>
-    <files>
-      <file attr="config" category="source" name="CMSIS_RTX\Templates\RTX_Conf_CM.c" version="4.70.0">
-        <instance index="0" removed="1">RTE\CMSIS\RTX_Conf_CM.c</instance>
-        <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cvendor="ARM" Cversion="4.74.0" condition="CMSIS Core"/>
-        <package name="CMSIS" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="ARM" version="3.20.4"/>
-        <targetInfos/>
-      </file>
-      <file attr="config" category="source" condition="ARMCM0" name="Device\Source\ARM\startup_ARMCM0.s">
-        <instance index="0" removed="1">RTE\Device\ARMCM0\startup_ARMCM0.s</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="0.0.1" condition="Generic ARMCM Device"/>
-        <package name="ARMCortex_DFP" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="Keil" version="0.0.1"/>
-        <targetInfos/>
-      </file>
-      <file attr="config" category="source" condition="ARMCM0" name="Device\Source\system_ARMCM0.c">
-        <instance index="0" removed="1">RTE\Device\ARMCM0\system_ARMCM0.c</instance>
-        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="0.0.1" condition="Generic ARMCM Device"/>
-        <package name="ARMCortex_DFP" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="Keil" version="0.0.1"/>
-        <targetInfos/>
-      </file>
-      <file attr="config" category="header" name="FileSystem\Driver\Config\NAND_MemBus_Config.h" version="5.0.0">
-        <instance index="0" removed="1">RTE\Drivers\NAND_MemBus_Config.h</instance>
-        <component Cclass="Drivers" Cgroup="NAND" Csub="Memory Bus" Cvendor="Keil" Cversion="5.04.0" condition="CMSIS Core with RTOS"/>
-        <package name="MDK-Middleware" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="Keil" version="5.1.4"/>
-        <targetInfos/>
-      </file>
-      <file attr="config" category="source" name="FileSystem\Driver\Config\OneNAND_Config.h" version="5.0.0">
-        <instance index="0" removed="1">RTE\Drivers\OneNAND_Config.h</instance>
-        <component Cclass="Drivers" Cgroup="NAND" Csub="OneNAND" Cvendor="Keil" Cversion="5.04.0" condition="CMSIS Core with RTOS"/>
-        <package name="MDK-Middleware" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="Keil" version="5.1.4"/>
-        <targetInfos/>
-      </file>
-      <file attr="config" category="source" name="FileSystem\Config\FS_Config.c" version="5.0.0">
-        <instance index="0" removed="1">RTE\File_System\FS_Config.c</instance>
-        <component Cbundle="MDK-Pro" Cclass="File System" Cgroup="CORE" Cvariant="LFN" Cvendor="Keil" Cversion="5.0.5" condition="CMSIS Core with RTOS"/>
-        <package name="MDK-Middleware" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="Keil" version="5.1.4"/>
-        <targetInfos/>
-      </file>
-      <file attr="config" category="source" name="FileSystem\Config\FS_Config_RAM.h" version="5.0.0">
-        <instance index="0" removed="1">RTE\File_System\FS_Config_RAM.h</instance>
-        <component Cbundle="MDK-Pro" Cclass="File System" Cgroup="Drive" Csub="RAM" Cvendor="Keil" Cversion="5.0.5" condition="File System Core"/>
-        <package name="MDK-Middleware" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="Keil" version="5.1.4"/>
-        <targetInfos/>
-      </file>
-    </files>
-  </RTE>
 
 </Project>
