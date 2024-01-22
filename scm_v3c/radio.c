@@ -226,10 +226,11 @@ void repeat_rx_tx(repeat_rx_tx_params_t repeat_rx_tx_params) {
     uint8_t cfg_coarse_stop;
     uint8_t cfg_mid_stop;
     uint8_t cfg_fine_stop;
-		
-		// 1.1V (helps reorder assembly code)
-		uint8_t *txPacket_fix = repeat_rx_tx_params.txPacket;
-		uint8_t pkt_len_fix = repeat_rx_tx_params.pkt_len;
+
+    // 1.1V/VDDD tap fix
+    // helps reorder the assembly code
+    uint8_t* txPacket_fix = repeat_rx_tx_params.txPacket;
+    uint8_t pkt_len_fix = repeat_rx_tx_params.pkt_len;
 
     int pkt_count = 0;
     char* radio_mode_string;
@@ -249,12 +250,20 @@ void repeat_rx_tx(repeat_rx_tx_params_t repeat_rx_tx_params) {
         cfg_mid_start = repeat_rx_tx_params.fixed_lc_mid;
         cfg_fine_start = repeat_rx_tx_params.fixed_lc_fine;
 
+        // 1.1V (NOP) VDDD tap fix
+        // the NOPs add some extra delay
+        // print statement also needed to be removed
+        // probably could be added back in if broken down into more
+        // than one print statement
         cfg_coarse_stop = cfg_coarse_start + 1;
+        __asm("NOP");
         cfg_mid_stop = cfg_mid_start + 1;
+        __asm("NOP");
         cfg_fine_stop = cfg_fine_start + 1;
+        __asm("NOP");
 
-        printf("Fixed %s at c:%u m:%u f:%u\n", radio_mode_string,
-               cfg_coarse_start, cfg_mid_start, cfg_fine_start);
+        // printf("Fixed %s at c:%u m:%u f:%u\n", radio_mode_string,
+        // cfg_coarse_start, cfg_mid_start, cfg_fine_start);
     } else {  // sweep mode
         cfg_coarse_start = repeat_rx_tx_params.sweep_lc_coarse_start;
         cfg_coarse_stop = repeat_rx_tx_params.sweep_lc_coarse_end;
@@ -262,14 +271,18 @@ void repeat_rx_tx(repeat_rx_tx_params_t repeat_rx_tx_params) {
         cfg_mid_stop = repeat_rx_tx_params.sweep_lc_mid_end;
         cfg_fine_start = repeat_rx_tx_params.sweep_lc_fine_start;
         cfg_fine_stop = repeat_rx_tx_params.sweep_lc_fine_end;
-        // 1.1V probably can be added back in if broken down
-				//printf("Sweeping %s from Coarse: %d-%d  Mid: %d-%d  Fine: %d-%d\n",
+        // 1.1V/VDDD tap fix
+        // probably can be added back in if broken down
+        // into three print statements
+        // printf("Sweeping %s from Coarse: %d-%d  Mid: %d-%d  Fine: %d-%d\n",
         //       radio_mode_string, cfg_coarse_start, cfg_coarse_stop,
         //       cfg_mid_start, cfg_mid_stop, cfg_fine_start, cfg_fine_stop);
     }
-		// 1.1V
-		__asm("NOP");
-		
+    // 1.1V/VDDD tap fix
+    // adds extra delay for the values above to be loaded in
+    // the same values that will be used in the for loops below
+    __asm("NOP");
+
     while (1) {
         // loop through all LC configuration
         for (cfg_coarse = cfg_coarse_start; cfg_coarse < cfg_coarse_stop;
@@ -286,7 +299,10 @@ void repeat_rx_tx(repeat_rx_tx_params_t repeat_rx_tx_params) {
                         printf("coarse=%d, middle=%d, fine=%d\r\n", cfg_coarse,
                                cfg_mid, cfg_fine);
                     }
-
+                    // 1.1V/VDDD tap fix
+                    // adds extra delay
+                    // but, not completely sure why this one is needed
+                    __asm("NOP");
                     LC_FREQCHANGE(cfg_coarse, cfg_mid, cfg_fine);
 
                     if (repeat_rx_tx_params.radio_mode == RX_MODE) {
@@ -297,13 +313,16 @@ void repeat_rx_tx(repeat_rx_tx_params_t repeat_rx_tx_params) {
                             repeat_rx_tx_params.txPacket[i] = ' ';
                         }
 
-                        // 1.1V
-												txPacket_fix = repeat_rx_tx_params.txPacket;
-												__asm("NOP");
-												// 1.1V
-                        repeat_rx_tx_params.fill_tx_packet(
-                            txPacket_fix, pkt_len_fix, state);
-												// 1.1V
+                        // 1.1V/VDDD tap fix
+                        // Referencing the variable before using it gives
+                        // the chip more time to load it in
+                        // Both function calls are using the new variables
+                        // created for the VDDD tap fix
+                        txPacket_fix = repeat_rx_tx_params.txPacket;
+                        __asm("NOP");
+                        repeat_rx_tx_params.fill_tx_packet(txPacket_fix,
+                                                           pkt_len_fix, state);
+
                         send_packet(txPacket_fix, pkt_len_fix);
                     }
 
