@@ -63,7 +63,7 @@ int main(void) {
 //			printf("Program SRAM, kB number %d \n",i);
 //			for(j=0; j<128; j++)
 //			{
-//				printf("0x%"PRIx64" ", *adr); //print in hexadecimal
+//				printf("0x%016"PRIx64" ", *adr); //print in hexadecimal
 //				adr++;
 //			}
 //			i++;
@@ -81,7 +81,7 @@ int main(void) {
 //			printf("Data SRAM, kB number %d \n",i);
 //			for(j=0; j<128; j++)
 //			{
-//				printf("0x%"PRIx64" ", *adr); //print in hexadecimal
+//				printf("0x016%"PRIx64" ", *adr); //print in hexadecimal
 //				adr++;
 //			}
 //			i++;
@@ -95,7 +95,7 @@ int main(void) {
 		max_adr = (uint64_t*)0x20010000;
 		while( adr < max_adr )
 		{
-			printf("%"PRIx64"", *adr); //print in hexadecimal
+			printf("%016"PRIx64, *adr); //print in hexadecimal
 			adr++;
 		}
 		
