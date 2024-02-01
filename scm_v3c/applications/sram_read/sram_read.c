@@ -93,6 +93,7 @@ int main(void) {
 		// read 55kB non-initialized part of the data memory, in a continuous way
 		adr = (uint64_t*)0x20002400;
 		max_adr = (uint64_t*)0x20010000;
+		printf("SRAM_DATA=");
 		while( adr < max_adr )
 		{
 			printf("%016"PRIx64, *adr); //print in hexadecimal
