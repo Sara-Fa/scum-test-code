@@ -99,7 +99,7 @@ int main(void) {
 			printf("%016"PRIx64, *adr); //print in hexadecimal
 			adr++;
 		}
-		
+		printf("\r\n");
 	
 		app_vars.count += 1;
 		//changed
